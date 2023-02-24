@@ -1,7 +1,11 @@
 const jsonfile = require("jsonfile");
 
 module.exports = {
-  writeData: function () {},
+  writeData: function (file, data) {
+    jsonfile.writeFile(file, data, function (err) {
+      if (err) throw err;
+    });
+  },
   pushData: function () {},
   deleteData: function (file, deleteByKey, deleteByValue) {
     const data = jsonfile.readFileSync(file);
