@@ -38,7 +38,11 @@ module.exports = {
     const data = jsonfile.readFileSync(file);
     const newData = data.filter((obj) => obj[deleteByKey] !== deleteByValue);
     if (newData.length !== data.length) {
-      jsonfile.writeFileSync(file, newData);
+      jsonfile.writeFileSync(file, newData, { spaces: 2, EOL: "\r\n" }, (err) => {
+        if (err) {
+          throw err;
+        }
+      });
     } else {
       throw new Error("Objects not found in data file");
     }
