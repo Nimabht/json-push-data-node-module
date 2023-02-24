@@ -2,6 +2,7 @@ const jsonfile = require("jsonfile");
 
 module.exports = {
   writeData: function () {},
+  pushData: function () {},
   deleteData: function (file, deleteByKey, deleteByValue) {
     const data = jsonfile.readFileSync(file);
     const index = data.findIndex((obj) => obj[deleteByKey] === deleteByValue);
@@ -12,5 +13,13 @@ module.exports = {
       throw new Error("Object not found in data file");
     }
   },
-  pushData: function () {},
+  deleteAllData: function (file, deleteByKey, deleteByValue) {
+    const data = jsonfile.readFileSync(file);
+    const newData = data.filter((obj) => obj[deleteByKey] !== deleteByValue);
+    if (newData.length !== data.length) {
+      jsonfile.writeFileSync(file, newData);
+    } else {
+      throw new Error("Objects not found in data file");
+    }
+  },
 };
