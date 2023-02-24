@@ -1,5 +1,5 @@
 {
-  "name": "json-push-data",
+  "name": "json-update-data",
   "version": "1.0.0",
   "description": "for updating json files",
   "main": "index.js",
