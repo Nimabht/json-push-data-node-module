@@ -25,7 +25,11 @@ module.exports = {
     const index = data.findIndex((obj) => obj[deleteByKey] === deleteByValue);
     if (index !== -1) {
       data.splice(index, 1);
-      jsonfile.writeFileSync(file, { spaces: 2, EOL: "\r\n" }, data);
+      jsonfile.writeFileSync(file, data, { spaces: 2, EOL: "\r\n" }, (err) => {
+        if (err) {
+          throw err;
+        }
+      });
     } else {
       throw new Error("Object not found in data file");
     }
