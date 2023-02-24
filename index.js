@@ -2,11 +2,24 @@ const jsonfile = require("jsonfile");
 
 module.exports = {
   writeData: function (file, data) {
-    jsonfile.writeFile(file, data, function (err) {
+    jsonfile.writeFile(file, data, { spaces: 2, EOL: "\r\n" }, function (err) {
       if (err) throw err;
     });
   },
-  pushData: function () {},
+  pushData: function (file, newData) {
+    jsonfile.readFile(file, (err, jsonData) => {
+      if (err) {
+        throw err;
+      } else {
+        jsonData.push(newData);
+        jsonfile.writeFile(file, jsonData, { spaces: 2, EOL: "\r\n" }, (err) => {
+          if (err) {
+            throw err;
+          }
+        });
+      }
+    });
+  },
   deleteData: function (file, deleteByKey, deleteByValue) {
     const data = jsonfile.readFileSync(file);
     const index = data.findIndex((obj) => obj[deleteByKey] === deleteByValue);
